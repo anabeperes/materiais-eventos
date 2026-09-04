@@ -2,16 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogOut, Menu, Plus } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Usuario } from "@/lib/types";
-
-const NAV = [
-  { href: "/", label: "Chat" },
-  { href: "/eventos", label: "Eventos" },
-  { href: "/palestrantes", label: "Palestrantes" },
-  { href: "/buscar", label: "Buscar" },
-];
 
 export function Header({ usuario, onAbrirMenu }: { usuario: Usuario; onAbrirMenu?: () => void }) {
   const pathname = usePathname();
@@ -34,19 +27,7 @@ export function Header({ usuario, onAbrirMenu }: { usuario: Usuario; onAbrirMenu
         <span className="hidden font-semibold tracking-tight sm:inline">Acervo de Eventos</span>
       </Link>
 
-      <nav className="ml-2 hidden items-center gap-1 md:flex">
-        {NAV.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={cn(
-              "rounded-md px-3 py-1.5 text-sm transition-colors",
-              ativo(item.href) ? "bg-fundo font-medium text-texto" : "text-texto-suave hover:bg-fundo hover:text-texto",
-            )}
-          >
-            {item.label}
-          </Link>
-        ))}
+      <div className="ml-auto flex items-center gap-2">
         {admin && (
           <Link
             href="/admin"
@@ -56,18 +37,6 @@ export function Header({ usuario, onAbrirMenu }: { usuario: Usuario; onAbrirMenu
             )}
           >
             Admin
-          </Link>
-        )}
-      </nav>
-
-      <div className="ml-auto flex items-center gap-2">
-        {admin && (
-          <Link
-            href="/admin/materiais/novo"
-            className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-marca px-3 text-sm font-medium text-white hover:bg-marca-escura"
-          >
-            <Plus size={16} />
-            <span className="hidden sm:inline">Novo material</span>
           </Link>
         )}
         <span className="hidden max-w-40 truncate text-sm text-texto-suave lg:inline" title={usuario.email}>

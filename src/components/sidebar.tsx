@@ -20,13 +20,6 @@ interface Props extends DadosSidebar {
   onPerguntar?: (pergunta: string) => void;
 }
 
-function rotuloData(data: string | null) {
-  if (!data) return "";
-  const [ano, mes] = data.split("-");
-  const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-  return `${meses[Number(mes) - 1] ?? ""}/${ano.slice(2)}`;
-}
-
 function Secao({ titulo, aberto = true, children }: { titulo: string; aberto?: boolean; children: React.ReactNode }) {
   const [open, setOpen] = useState(aberto);
   return (
@@ -100,15 +93,7 @@ export function Sidebar({ eventos, palestrantes, anos, tags, aberta, onFechar, o
             {eventos.map((e) =>
               (
                 <div key={e.id}>
-                  {item(
-                    <span className="flex flex-col">
-                      <span className="truncate">{e.nome}</span>
-                      <span className="text-[11px] text-texto-suave">{rotuloData(e.data_evento)}</span>
-                    </span>,
-                    `materiais do evento ${e.nome}`,
-                    `/eventos/${e.slug}`,
-                    <span className="rounded-md bg-fundo px-1.5 text-[11px] text-texto-suave">{e.total_materiais}</span>,
-                  )}
+                  {item(e.nome, `materiais do evento ${e.nome}`, `/eventos/${e.slug}`)}
                 </div>
               ),
             )}
