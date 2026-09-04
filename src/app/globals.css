@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+:root {
+  --fundo: #f6f5f2;
+  --superficie: #ffffff;
+  --borda: #e6e3dc;
+  --texto: #1c1b19;
+  --texto-suave: #6b6760;
+  --marca: #1f6f5c;
+  --marca-escura: #175446;
+  --marca-clara: #e6f2ee;
+  --erro: #b3261e;
+}
+
+@theme inline {
+  --color-fundo: var(--fundo);
+  --color-superficie: var(--superficie);
+  --color-borda: var(--borda);
+  --color-texto: var(--texto);
+  --color-texto-suave: var(--texto-suave);
+  --color-marca: var(--marca);
+  --color-marca-escura: var(--marca-escura);
+  --color-marca-clara: var(--marca-clara);
+  --color-erro: var(--erro);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar discreta nas áreas de rolagem do dashboard */
+.scroll-suave {
+  scrollbar-width: thin;
+  scrollbar-color: var(--borda) transparent;
+}
