@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
+import { ApiError } from "@google/genai";
 import { z } from "zod";
 import { getUsuarioAtual } from "@/lib/auth";
 import { permitir } from "@/lib/rate-limit";
@@ -29,8 +29,8 @@ export async function POST(request: NextRequest) {
   const usuario = await getUsuarioAtual();
   if (!usuario) return NextResponse.json({ erro: "Não autenticado." }, { status: 401 });
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return NextResponse.json({ erro: "ANTHROPIC_API_KEY não configurada no servidor." }, { status: 500 });
+  if (!process.env.GEMINI_API_KEY) {
+    return NextResponse.json({ erro: "GEMINI_API_KEY não configurada no servidor." }, { status: 500 });
   }
 
   const limite = Number(process.env.CHAT_RATE_LIMIT_PER_HOUR ?? 60);
@@ -68,9 +68,11 @@ export async function POST(request: NextRequest) {
 }
 
 function mensagemDeErro(e: unknown): string {
-  if (e instanceof Anthropic.AuthenticationError) return "Chave da API de IA inválida.";
-  if (e instanceof Anthropic.RateLimitError) return "A API de IA está ocupada. Tente de novo em instantes.";
-  if (e instanceof Anthropic.BadRequestError) return "A IA não aceitou essa mensagem. Tente com outro texto ou imagem.";
-  if (e instanceof Anthropic.APIError) return `Erro na API de IA (${e.status}).`;
+  if (e instanceof ApiError) {
+    if (e.status === 401 || e.status === 403) return "Chave da API de IA inválida.";
+    if (e.status === 429 || e.status === 503) return "A API de IA está ocupada. Tente de novo em instantes.";
+    if (e.status === 400) return "A IA não aceitou essa mensagem. Tente com outro texto ou imagem.";
+    return `Erro na API de IA (${e.status}).`;
+  }
   return "Erro inesperado ao consultar a IA.";
 }

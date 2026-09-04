@@ -11,7 +11,7 @@ PRD completo em [`docs/PRD.md`](docs/PRD.md).
 | Framework | Next.js 16 (App Router, Server Actions) |
 | Hospedagem | Vercel |
 | Banco + Auth | Supabase (Postgres com full-text em português + `pg_trgm`, magic link com allowlist, RLS) |
-| IA | Claude via SDK oficial `@anthropic-ai/sdk` (visão nativa para ler o print, tool calling) |
+| IA | Google Gemini via SDK oficial `@google/genai` (visão nativa para ler o print, function calling) |
 | UI | Tailwind v4 + componentes próprios, `lucide-react` |
 
 ## Como rodar
@@ -42,8 +42,9 @@ Copie `.env.example` para `.env.local` e preencha:
 |---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | URL do projeto (Project Settings → API) |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Chave `anon` pública |
-| `ANTHROPIC_API_KEY` | Chave da API da Anthropic. Só existe no servidor |
-| `ANTHROPIC_MODEL` | Modelo do chat. Padrão `claude-sonnet-5`; `claude-haiku-4-5` para custo menor |
+| `GEMINI_API_KEY` | Chave da API Gemini (AI Studio). Só existe no servidor |
+| `GEMINI_MODEL` | Modelo do chat. Padrão `gemini-3.5-flash` |
+| `GEMINI_MODEL_FALLBACK` | Modelo reserva quando o principal responde 503. Padrão `gemini-3.8-flash` |
 | `NEXT_PUBLIC_SITE_URL` | URL pública, usada no link mágico. Na Vercel pode ficar vazio |
 | `CHAT_RATE_LIMIT_PER_HOUR` | Limite de mensagens de chat por usuário por hora (padrão 60) |
 
@@ -102,7 +103,7 @@ Admin → Importar CSV. Colunas: `evento_nome, data_evento, material_titulo, url
 ## Decisões de implementação (vs. PRD)
 
 - **Next.js 16** em vez de 15: é a versão atual do `create-next-app`; a arquitetura é a mesma (App Router, Server Actions, `proxy.ts` no lugar de `middleware.ts`).
-- **SDK oficial da Anthropic** em vez do Vercel AI SDK: o loop de tool calling é curto e o controle direto facilita a validação de IDs/URLs. Streaming é feito como NDJSON de eventos.
+- **Gemini com o SDK oficial do Google** em vez de Claude + Vercel AI SDK: decisão de custo tomada na implantação. O loop de function calling é curto e o controle direto facilita a validação de IDs/URLs. Streaming é feito como NDJSON de eventos.
 - **Rate limit em memória**: por instância. Suficiente para uso interno; se precisar de limite exato entre instâncias, troque por Upstash/Vercel KV.
 
 ## Estado das fases do PRD
