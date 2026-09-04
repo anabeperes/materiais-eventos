@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, ChevronRight, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { ChevronDown, ChevronRight, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TIPOS_MATERIAL, TIPO_LABEL, type EventoComContagem, type Palestrante } from "@/lib/types";
 
@@ -50,7 +51,17 @@ function Secao({
   );
 }
 
+function normalizar(t: string) {
+  return t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
 export function Sidebar({ eventos, palestrantes, anos, tags, aberta, onFechar, onPerguntar }: Props) {
+  const pathname = usePathname();
+  const [filtro, setFiltro] = useState("");
+  const eventosVisiveis = filtro.trim()
+    ? eventos.filter((e) => normalizar(e.nome).includes(normalizar(filtro.trim())))
+    : eventos;
+
   const item = (
     label: React.ReactNode,
     pergunta: string,
@@ -100,16 +111,39 @@ export function Sidebar({ eventos, palestrantes, anos, tags, aberta, onFechar, o
 
         <div className="scroll-suave flex-1 space-y-4 overflow-y-auto px-2 py-3">
           <Secao titulo="Eventos" destaque>
+            {eventos.length > 5 && (
+              <div className="relative mb-1 px-1">
+                <Search size={14} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-texto-suave" />
+                <input
+                  value={filtro}
+                  onChange={(e) => setFiltro(e.target.value)}
+                  placeholder="Filtrar eventos..."
+                  className="h-8 w-full rounded-md border border-borda bg-superficie pl-7 pr-2 text-sm outline-none placeholder:text-texto-suave/70 focus:border-marca"
+                />
+              </div>
+            )}
             {eventos.length === 0 && (
               <p className="px-2 py-1 text-xs text-texto-suave">Nenhum evento cadastrado ainda.</p>
             )}
-            {eventos.map((e) =>
-              (
-                <div key={e.id}>
-                  {item(e.nome, `materiais do evento ${e.nome}`, `/eventos/${e.slug}`)}
-                </div>
-              ),
+            {eventosVisiveis.length === 0 && eventos.length > 0 && (
+              <p className="px-2 py-1 text-xs text-texto-suave">Nenhum evento com esse nome.</p>
             )}
+            {eventosVisiveis.map((e) => {
+              const ativo = pathname === `/eventos/${e.slug}`;
+              return (
+                <Link
+                  key={e.id}
+                  href={`/eventos/${e.slug}`}
+                  onClick={onFechar}
+                  className={cn(
+                    "flex w-full items-center rounded-md px-2 py-1.5 text-sm hover:bg-fundo",
+                    ativo ? "bg-marca-clara font-medium text-texto" : "text-texto",
+                  )}
+                >
+                  <span className="min-w-0 flex-1 truncate">{e.nome}</span>
+                </Link>
+              );
+            })}
           </Secao>
 
           <div className="border-t border-borda" />

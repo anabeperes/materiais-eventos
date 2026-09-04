@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { BadgeTipo, Tag } from "@/components/ui/badge";
+import { BotaoCopiar } from "@/components/botao-copiar";
 import { formatarData } from "@/lib/utils";
 import type { TipoMaterial } from "@/lib/types";
 
@@ -53,6 +54,7 @@ export function MaterialCard(p: MaterialCardProps) {
       </div>
       <div className="flex shrink-0 items-center gap-2">
         {p.acoes}
+        <BotaoCopiar texto={p.url} />
         <a
           href={p.url}
           target="_blank"

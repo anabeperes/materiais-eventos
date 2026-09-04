@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Pencil } from "lucide-react";
 import { MaterialCard } from "@/components/material-card";
+import { BotaoCopiar } from "@/components/botao-copiar";
 import { getUsuarioAtual } from "@/lib/auth";
 import { buscarEventoPorSlug, listarMateriaisDoEvento } from "@/lib/data";
 import { formatarData } from "@/lib/utils";
@@ -15,12 +16,12 @@ export default async function EventoPage({ params }: { params: Promise<{ slug: s
 
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-6">
-      <Link href="/eventos" className="text-xs text-texto-suave hover:underline">
-        ← Eventos
+      <Link href="/" className="text-xs text-texto-suave hover:underline">
+        ← Voltar ao chat
       </Link>
       <div className="mt-2 flex flex-wrap items-start justify-between gap-2">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight">{evento.nome}</h1>
+          <h1 className="text-2xl font-bold tracking-tight">{evento.nome}</h1>
           <p className="mt-1 text-sm text-texto-suave">
             {formatarData(evento.data_evento)}
             {evento.local ? ` · ${evento.local}` : ""}
@@ -45,7 +46,21 @@ export default async function EventoPage({ params }: { params: Promise<{ slug: s
         )}
       </div>
 
-      <div className="mt-6 space-y-2">
+      <div className="mt-6 flex items-center justify-between gap-2">
+        <p className="text-sm text-texto-suave">
+          {materiais.length} {materiais.length === 1 ? "material" : "materiais"}
+        </p>
+        {materiais.length > 1 && (
+          <BotaoCopiar
+            texto={materiais.map((m) => `${m.titulo}: ${m.url}`).join("\n")}
+            rotulo="Copiar todos os links"
+            rotuloCopiado="Links copiados!"
+            tamanho="sm"
+          />
+        )}
+      </div>
+
+      <div className="mt-3 space-y-2">
         {materiais.map((m) => (
           <MaterialCard
             key={m.id}
