@@ -1,10 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { ImagePlus, Loader2, SendHorizontal, X } from "lucide-react";
 import { MaterialCard } from "@/components/material-card";
 import { usePerguntaContext } from "@/components/chat/pergunta-context";
-import type { MaterialBusca } from "@/lib/types";
+import type { EventoComContagem, MaterialBusca } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 type MediaType = "image/png" | "image/jpeg" | "image/gif" | "image/webp";
@@ -67,7 +68,7 @@ function textoHistoricoAssistente(m: MsgAssistente): string {
   return partes.join(" ") || m.erro || "";
 }
 
-export function Chat() {
+export function Chat({ eventos = [] }: { eventos?: EventoComContagem[] }) {
   const [mensagens, setMensagens] = useState<Msg[]>([]);
   const [texto, setTexto] = useState("");
   const [anexo, setAnexo] = useState<Anexo | null>(null);
@@ -222,10 +223,12 @@ export function Chat() {
       <div className="scroll-suave flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-3xl px-4 py-6">
           {vazio ? (
-            <div className="mt-10 sm:mt-20">
-              <h1 className="text-2xl font-semibold tracking-tight">Pergunte pelo material</h1>
-              <p className="mt-1 text-texto-suave">Digite o nome do evento ou do palestrante, ou cole um print.</p>
-              <div className="mt-6 flex flex-wrap gap-2">
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">Pergunte pelo material</h1>
+              <p className="mt-1 text-texto-suave">
+                Digite o nome do evento ou do palestrante, cole um print, ou abra um evento abaixo.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
                 {SUGESTOES.map((s) => (
                   <button
                     key={s}
@@ -237,6 +240,29 @@ export function Chat() {
                   </button>
                 ))}
               </div>
+
+              {eventos.length > 0 && (
+                <div className="mt-8">
+                  <h2 className="mb-3 text-base font-bold">Eventos</h2>
+                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    {eventos.map((e) => (
+                      <Link
+                        key={e.id}
+                        href={`/eventos/${e.slug}`}
+                        className="group flex flex-col justify-between rounded-xl border border-borda bg-superficie p-4 transition-colors hover:border-marca hover:bg-marca-clara"
+                      >
+                        <span className="font-medium leading-snug">{e.nome}</span>
+                        <span className="mt-3 flex items-center justify-between text-xs text-texto-suave">
+                          <span>{e.data_evento ? e.data_evento.slice(0, 4) : "sem data"}</span>
+                          <span>
+                            {e.total_materiais} {e.total_materiais === 1 ? "material" : "materiais"}
+                          </span>
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <div className="space-y-6">
