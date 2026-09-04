@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { LogOut, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Usuario } from "@/lib/types";
+import { Logo } from "@/components/logo";
 
 export function Header({ usuario, onAbrirMenu }: { usuario: Usuario; onAbrirMenu?: () => void }) {
   const pathname = usePathname();
@@ -23,7 +24,7 @@ export function Header({ usuario, onAbrirMenu }: { usuario: Usuario; onAbrirMenu
       </button>
 
       <Link href="/" className="flex items-center gap-2">
-        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-marca text-xs font-bold text-white">AE</span>
+        <Logo tamanho={30} />
         <span className="hidden font-semibold tracking-tight sm:inline">Acervo de Eventos</span>
       </Link>
 

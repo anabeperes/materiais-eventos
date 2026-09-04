@@ -1,4 +1,5 @@
 import { FormularioLogin } from "./formulario";
+import { Logo } from "@/components/logo";
 
 const MENSAGENS: Record<string, string> = {
   "sem-acesso": "Seu e-mail não está mais na lista de acesso. Fale com o admin.",
@@ -15,14 +16,12 @@ export default async function LoginPage({
     <main className="flex min-h-screen items-center justify-center bg-fundo px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-marca text-lg font-bold text-white">
-            AE
-          </div>
+          <Logo tamanho={64} className="mx-auto mb-4" />
           <h1 className="text-2xl font-semibold tracking-tight">Acervo de Eventos</h1>
           <p className="mt-1 text-sm text-texto-suave">Mentoria Fluxo — acesso interno</p>
         </div>
         {erro && MENSAGENS[erro] && (
-          <p className="mb-4 rounded-lg border border-erro/30 bg-erro/10 px-3 py-2 text-sm text-erro">
+          <p className="mb-4 rounded-lg border border-borda bg-fundo px-3 py-2 text-sm font-medium text-texto">
             {MENSAGENS[erro]}
           </p>
         )}

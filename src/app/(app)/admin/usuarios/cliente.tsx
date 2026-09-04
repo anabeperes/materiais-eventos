@@ -30,7 +30,7 @@ export function FormularioUsuario() {
         {pendente ? "Salvando..." : "Adicionar"}
       </Button>
       {estado.erro && <p className="text-sm text-erro sm:ml-2">{estado.erro}</p>}
-      {estado.ok && <p className="text-sm text-marca sm:ml-2">Adicionado.</p>}
+      {estado.ok && <p className="text-sm font-medium text-texto sm:ml-2">Adicionado.</p>}
     </form>
   );
 }

@@ -57,7 +57,7 @@ export function MaterialCard(p: MaterialCardProps) {
           href={p.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-marca px-3 text-sm font-medium text-white hover:bg-marca-escura"
+          className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-marca px-3 text-sm font-medium text-texto hover:bg-marca-escura"
         >
           Abrir <ExternalLink size={14} />
         </a>

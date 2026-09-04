@@ -90,7 +90,7 @@ export function FormularioMaterial({ eventos, palestrantes, material, eventoInic
       </div>
 
       {estado.erro && <p className="text-sm text-erro">{estado.erro}</p>}
-      {estado.ok && <p className="text-sm text-marca">Salvo.</p>}
+      {estado.ok && <p className="text-sm font-medium text-texto">Salvo.</p>}
 
       <div className="flex flex-wrap items-center gap-2">
         <Button type="submit" disabled={pendente}>

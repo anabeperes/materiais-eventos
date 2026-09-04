@@ -17,7 +17,7 @@ export function BotaoExcluirEvento({ id, nome, total }: { id: string; nome: stri
             : `Excluir o evento "${nome}"?`;
         if (confirm(msg)) start(() => excluirEvento(id));
       }}
-      className="rounded-md p-1.5 text-texto-suave hover:bg-erro/10 hover:text-erro disabled:opacity-50"
+      className="rounded-md p-1.5 text-texto-suave hover:bg-fundo hover:text-texto disabled:opacity-50"
       title="Excluir evento"
     >
       <Trash2 size={15} />
@@ -34,7 +34,7 @@ export function BotaoExcluirMaterial({ id, titulo }: { id: string; titulo: strin
       onClick={() => {
         if (confirm(`Excluir o material "${titulo}"?`)) start(() => excluirMaterial(id));
       }}
-      className="inline-flex h-10 items-center gap-2 rounded-lg px-3 text-sm text-erro hover:bg-erro/10 disabled:opacity-50"
+      className="inline-flex h-10 items-center gap-2 rounded-lg px-3 text-sm text-texto-suave hover:bg-fundo hover:text-texto disabled:opacity-50"
     >
       <Trash2 size={15} /> Excluir
     </button>

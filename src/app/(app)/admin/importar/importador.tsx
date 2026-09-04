@@ -68,7 +68,7 @@ export function Importador() {
         <input type="file" accept=".csv,text/csv" className="hidden" onChange={(e) => lerArquivo(e.target.files?.[0])} />
       </label>
 
-      {erro && <p className="rounded-lg border border-erro/30 bg-erro/10 px-3 py-2 text-sm text-erro">{erro}</p>}
+      {erro && <p className="rounded-lg border border-borda bg-fundo px-3 py-2 text-sm font-medium text-texto">{erro}</p>}
       {pendente && !preview && <p className="text-sm text-texto-suave">Analisando...</p>}
 
       {preview && !resultado && (
@@ -96,7 +96,7 @@ export function Importador() {
               </thead>
               <tbody className="divide-y divide-borda">
                 {preview.map((p) => (
-                  <tr key={p.linha} className={cn(p.status === "erro" && "bg-erro/5")}>
+                  <tr key={p.linha} className={cn(p.status === "erro" && "bg-fundo")}>
                     <td className="px-2 py-1.5 text-texto-suave">{p.linha}</td>
                     <td className="px-2 py-1.5">{p.dados.evento_nome}</td>
                     <td className="px-2 py-1.5">
@@ -112,7 +112,7 @@ export function Importador() {
                       ) : (
                         <ul className="space-y-0.5">
                           {p.detalhes.map((d, i) => (
-                            <li key={i} className={cn(d.startsWith("Atenção") && "text-amber-700")}>
+                            <li key={i} className={cn(d.startsWith("Atenção") && "font-medium")}>
                               {d}
                             </li>
                           ))}

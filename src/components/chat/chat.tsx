@@ -231,7 +231,7 @@ export function Chat() {
                     key={s}
                     type="button"
                     onClick={() => void enviar(s, null)}
-                    className="rounded-full border border-borda bg-superficie px-3 py-1.5 text-sm text-texto hover:border-marca hover:text-marca"
+                    className="rounded-full border border-borda bg-superficie px-3 py-1.5 text-sm text-texto hover:border-marca hover:bg-marca-clara"
                   >
                     {s}
                   </button>
@@ -243,7 +243,7 @@ export function Chat() {
               {mensagens.map((m) =>
                 m.role === "user" ? (
                   <div key={m.id} className="flex justify-end">
-                    <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-marca px-4 py-2.5 text-sm text-white">
+                    <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-marca px-4 py-2.5 text-sm text-texto">
                       {m.imagemPreview && (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={m.imagemPreview} alt="Print enviado" className="mb-2 max-h-48 rounded-lg" />
@@ -312,8 +312,8 @@ export function Chat() {
               type="submit"
               disabled={enviando || (!texto.trim() && !anexo)}
               className={cn(
-                "rounded-lg p-2 text-white transition-colors",
-                enviando || (!texto.trim() && !anexo) ? "bg-borda text-texto-suave" : "bg-marca hover:bg-marca-escura",
+                "rounded-lg p-2 transition-colors",
+                enviando || (!texto.trim() && !anexo) ? "bg-borda text-texto-suave" : "bg-marca text-texto hover:bg-marca-escura",
               )}
               aria-label="Enviar"
             >
@@ -346,7 +346,7 @@ function BolhaAssistente({ m, onEscolherEvento }: { m: MsgAssistente; onEscolher
             <Loader2 size={14} className="animate-spin" /> {m.status ?? "Pensando..."}
           </p>
         )}
-        {m.erro && <p className="rounded-lg border border-erro/30 bg-erro/10 px-3 py-2 text-sm text-erro">{m.erro}</p>}
+        {m.erro && <p className="rounded-lg border border-borda bg-fundo px-3 py-2 text-sm font-medium text-texto">{m.erro}</p>}
         {m.eventosCandidatos.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {m.eventosCandidatos.map((e) => (
@@ -354,7 +354,7 @@ function BolhaAssistente({ m, onEscolherEvento }: { m: MsgAssistente; onEscolher
                 key={e.evento_id}
                 type="button"
                 onClick={() => onEscolherEvento(e.nome)}
-                className="rounded-full border border-borda bg-superficie px-3 py-1.5 text-sm hover:border-marca hover:text-marca"
+                className="rounded-full border border-borda bg-superficie px-3 py-1.5 text-sm hover:border-marca hover:bg-marca-clara"
               >
                 {e.nome}
               </button>

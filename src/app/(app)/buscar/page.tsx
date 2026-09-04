@@ -69,7 +69,7 @@ export default async function BuscarPage({
             </option>
           ))}
         </Select>
-        <button type="submit" className="h-10 rounded-lg bg-marca px-4 text-sm font-medium text-white hover:bg-marca-escura">
+        <button type="submit" className="h-10 rounded-lg bg-marca px-4 text-sm font-medium text-texto hover:bg-marca-escura">
           Buscar
         </button>
       </form>

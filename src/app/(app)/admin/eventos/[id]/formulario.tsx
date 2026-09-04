@@ -37,7 +37,7 @@ export function FormularioEvento({
         <Textarea id="descricao" name="descricao" defaultValue={evento.descricao ?? ""} />
       </div>
       {estado.erro && <p className="text-sm text-erro">{estado.erro}</p>}
-      {estado.ok && <p className="text-sm text-marca">Salvo.</p>}
+      {estado.ok && <p className="text-sm font-medium text-texto">Salvo.</p>}
       <Button type="submit" disabled={pendente}>
         {pendente ? "Salvando..." : "Salvar evento"}
       </Button>
