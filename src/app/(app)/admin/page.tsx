@@ -78,6 +78,9 @@ export default async function AdminPage() {
                   {formatarData(e.data_evento)} · {e.total_materiais} materiais
                 </span>
               </div>
+              <Link href={`/admin/eventos/${e.id}`} className="rounded-md p-1.5 text-texto-suave hover:bg-fundo" title="Editar evento">
+                <Pencil size={15} />
+              </Link>
               <BotaoExcluirEvento id={e.id} nome={e.nome} total={e.total_materiais} />
             </li>
           ))}

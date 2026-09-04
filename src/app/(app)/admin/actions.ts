@@ -385,3 +385,37 @@ export async function alterarPapel(id: string, papel: "admin" | "membro"): Promi
 function isRedirect(e: unknown): boolean {
   return typeof e === "object" && e !== null && "digest" in e && String((e as { digest: unknown }).digest).startsWith("NEXT_REDIRECT");
 }
+
+// -----------------------------------------------------------------------------
+// Evento (edição)
+// -----------------------------------------------------------------------------
+
+const eventoSchema = z.object({
+  nome: z.string().trim().min(1, "Informe o nome do evento."),
+  data_evento: z
+    .string()
+    .trim()
+    .refine((v) => !v || /^\d{4}-\d{2}-\d{2}$/.test(v), "Data inválida.")
+    .optional(),
+  local: z.string().trim().optional(),
+  descricao: z.string().trim().optional(),
+});
+
+export async function atualizarEvento(id: string, _prev: EstadoForm, fd: FormData): Promise<EstadoForm> {
+  await exigirAdmin();
+  const parsed = eventoSchema.safeParse(Object.fromEntries(fd));
+  if (!parsed.success) return { erro: parsed.error.issues[0]?.message };
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("eventos")
+    .update({
+      nome: parsed.data.nome,
+      data_evento: parsed.data.data_evento || null,
+      local: parsed.data.local || null,
+      descricao: parsed.data.descricao || null,
+    })
+    .eq("id", id);
+  if (error) return { erro: "Não foi possível salvar o evento." };
+  revalidarTudo();
+  return { ok: true };
+}

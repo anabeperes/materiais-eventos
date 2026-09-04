@@ -28,12 +28,20 @@ export default async function EventoPage({ params }: { params: Promise<{ slug: s
           {evento.descricao && <p className="mt-2 text-sm">{evento.descricao}</p>}
         </div>
         {admin && (
-          <Link
-            href={`/admin/materiais/novo?evento=${evento.id}`}
-            className="inline-flex h-9 items-center rounded-lg border border-borda bg-superficie px-3 text-sm hover:bg-fundo"
-          >
-            + Material neste evento
-          </Link>
+          <div className="flex gap-2">
+            <Link
+              href={`/admin/eventos/${evento.id}`}
+              className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-borda bg-superficie px-3 text-sm hover:bg-fundo"
+            >
+              <Pencil size={14} /> Editar evento
+            </Link>
+            <Link
+              href={`/admin/materiais/novo?evento=${evento.id}`}
+              className="inline-flex h-9 items-center rounded-lg border border-borda bg-superficie px-3 text-sm hover:bg-fundo"
+            >
+              + Material neste evento
+            </Link>
+          </div>
         )}
       </div>
 
