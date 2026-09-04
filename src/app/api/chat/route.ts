@@ -33,7 +33,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ erro: "GEMINI_API_KEY não configurada no servidor." }, { status: 500 });
   }
 
-  const limite = Number(process.env.CHAT_RATE_LIMIT_PER_HOUR ?? 60);
+  // Valor vazio ou inválido na variável cai no padrão, em vez de bloquear tudo.
+  const limiteEnv = Number(process.env.CHAT_RATE_LIMIT_PER_HOUR);
+  const limite = Number.isFinite(limiteEnv) && limiteEnv > 0 ? limiteEnv : 120;
   if (!permitir(`chat:${usuario.id}`, limite, 60 * 60 * 1000)) {
     return NextResponse.json({ erro: "Muitas mensagens em pouco tempo. Espere um pouco." }, { status: 429 });
   }

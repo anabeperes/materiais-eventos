@@ -46,7 +46,7 @@ Copie `.env.example` para `.env.local` e preencha:
 | `GEMINI_MODEL` | Modelo do chat. Padrão `gemini-3.5-flash` |
 | `GEMINI_MODEL_FALLBACK` | Modelo reserva quando o principal responde 503. Padrão `gemini-3.8-flash` |
 | `NEXT_PUBLIC_SITE_URL` | URL pública, usada no link mágico. Na Vercel pode ficar vazio |
-| `CHAT_RATE_LIMIT_PER_HOUR` | Limite de mensagens de chat por usuário por hora (padrão 60) |
+| `CHAT_RATE_LIMIT_PER_HOUR` | Limite de mensagens de chat por usuário por hora (padrão 120). Vazio ou inválido usa o padrão |
 
 ### 3. Local
 
