@@ -25,7 +25,7 @@ export function Header({ usuario, onAbrirMenu }: { usuario: Usuario; onAbrirMenu
 
       <Link href="/" className="flex items-center gap-2">
         <Logo tamanho={30} />
-        <span className="hidden font-semibold tracking-tight sm:inline">Acervo de Eventos</span>
+        <span className="hidden font-semibold tracking-tight sm:inline">Materiais Eventos</span>
       </Link>
 
       <div className="ml-auto flex items-center gap-2">

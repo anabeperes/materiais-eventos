@@ -20,16 +20,29 @@ interface Props extends DadosSidebar {
   onPerguntar?: (pergunta: string) => void;
 }
 
-function Secao({ titulo, aberto = true, children }: { titulo: string; aberto?: boolean; children: React.ReactNode }) {
+function Secao({
+  titulo,
+  aberto = true,
+  destaque = false,
+  children,
+}: {
+  titulo: string;
+  aberto?: boolean;
+  destaque?: boolean;
+  children: React.ReactNode;
+}) {
   const [open, setOpen] = useState(aberto);
   return (
     <div>
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center gap-1 px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-texto-suave hover:text-texto"
+        className={cn(
+          "flex w-full items-center gap-1 px-2 py-1.5 hover:text-texto",
+          destaque ? "text-base font-bold text-texto" : "text-[11px] font-semibold uppercase tracking-wider text-texto-suave",
+        )}
       >
-        {open ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+        {open ? <ChevronDown size={destaque ? 16 : 12} /> : <ChevronRight size={destaque ? 16 : 12} />}
         {titulo}
       </button>
       {open && <div className="mt-0.5 space-y-0.5">{children}</div>}
@@ -79,14 +92,14 @@ export function Sidebar({ eventos, palestrantes, anos, tags, aberta, onFechar, o
         )}
       >
         <div className="flex h-14 items-center justify-between px-3 md:hidden">
-          <span className="font-semibold">Navegar</span>
+          <span className="font-semibold">Materiais Eventos</span>
           <button type="button" onClick={onFechar} className="rounded-lg p-2 text-texto-suave hover:bg-fundo" aria-label="Fechar">
             <X size={18} />
           </button>
         </div>
 
         <div className="scroll-suave flex-1 space-y-4 overflow-y-auto px-2 py-3">
-          <Secao titulo="Eventos">
+          <Secao titulo="Eventos" destaque>
             {eventos.length === 0 && (
               <p className="px-2 py-1 text-xs text-texto-suave">Nenhum evento cadastrado ainda.</p>
             )}

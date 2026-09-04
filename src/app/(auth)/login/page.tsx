@@ -17,7 +17,7 @@ export default async function LoginPage({
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <Logo tamanho={64} className="mx-auto mb-4" />
-          <h1 className="text-2xl font-semibold tracking-tight">Acervo de Eventos</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Materiais Eventos</h1>
           <p className="mt-1 text-sm text-texto-suave">Mentoria Fluxo — acesso interno</p>
         </div>
         {erro && MENSAGENS[erro] && (

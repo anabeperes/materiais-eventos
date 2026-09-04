@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: { default: "Acervo de Eventos", template: "%s · Acervo de Eventos" },
+  title: { default: "Materiais Eventos", template: "%s · Materiais Eventos" },
   description: "Materiais dos eventos da Mentoria Fluxo, num lugar só.",
 };
 
